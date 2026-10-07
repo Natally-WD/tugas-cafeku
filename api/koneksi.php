@@ -3,7 +3,7 @@ $host='localhost';
 $user='root';
 $pass='';
 $db='cafeku';
-$port='3307';
+$port='3306'; //lab pakai 3307
 
 $conn = mysqli_connect($host,$user,$pass,$db,$port);
 

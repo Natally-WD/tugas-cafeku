@@ -9,17 +9,25 @@ $query="UPDATE produk SET nama =? , harga =? , stok =? WHERE id =? ";
 $stmt = mysqli_prepare($conn, $query);
 
 if ($stmt) {
-    $nama=$data['nama'];
-    $harga=$data['harga'];
-    $stok=$data['stok'];
-    $id=$data['id'];
+    $nama=$_POST['nama'];
+    $harga=$_POST['harga'];
+    $stok=$_POST['stok'];
+    $id=$_POST['id'];
 
-    mysqli_stmt_bind_param($stmt,'sdsi',$nama, $harga, $stok, $id);
+    mysqli_stmt_bind_param($stmt,'sdii',$nama, $harga, $stok, $id);
 
     if (mysqli_stmt_execute($stmt)) {
-        echo json_encode(['STATUS'=>'BERHASIL', 'PESAN'=>'DATA PRODUK BERHASIL DIUPDATE', 'DATA'=>[]]);
+        //echo json_encode(['STATUS'=>'BERHASIL', 'PESAN'=>'DATA PRODUK BERHASIL DIUPDATE', 'DATA'=>[]]);
+        echo "<script>
+            alert('data berhasil di Update!');
+            window.location.href = '../../produk.php';
+        </script>";
     } else {
-        echo json_encode(['STATUS'=>'GAGAL', 'PESAN'=>'DATA PRODUK GAGAL DIUPDATE', 'DATA'=>[]]);
+        //echo json_encode(['STATUS'=>'GAGAL', 'PESAN'=>'DATA PRODUK GAGAL DIUPDATE', 'DATA'=>[]]);
+        echo "<script>
+        alert('data gagal di update!');
+        window.location.href = '../../editproduk.php?id=$id';
+    </script>";
     }
 
 } else {

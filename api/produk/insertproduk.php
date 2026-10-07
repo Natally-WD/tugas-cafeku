@@ -17,9 +17,17 @@ if ($stmt) {
     mysqli_stmt_bind_param($stmt,'sdi',$nama,$harga,$stok);
 
     if (mysqli_stmt_execute($stmt)) {
-        echo json_encode(['STATUS'=>'BERHASIL', 'PESAN'=>'DATA BERHASIL DISIMPAN', 'DATA'=>[]]);
+        //echo json_encode(['STATUS'=>'BERHASIL', 'PESAN'=>'DATA BERHASIL DISIMPAN', 'DATA'=>[]]);
+        echo "<script>
+                alert('data berhasil ditambahkan!');
+                window.location.href = '../../produk.php';
+            </script>";
     }else{
-        echo json_encode(['STATUS'=>'GAGAL', 'PESAN'=>'DATA GAGAL DISIMPAN','DATA'=>[]]);
+        //echo json_encode(['STATUS'=>'GAGAL', 'PESAN'=>'DATA GAGAL DISIMPAN','DATA'=>[]]);
+        echo "<script>
+                alert('data gagal ditambahkan!');
+                window.location.href = '../../tambahproduk.php';
+            </script>";
     }
 }else{
     echo json_encode(['STATUS'=>'GAGAL', 'PESAN'=>'MASALAH KONEKSI', 'DATA'=>[]]);

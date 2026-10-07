@@ -1,5 +1,5 @@
 <?php
-include('../koneksi.php');
+
 
 //saat menggunakan POST
 //$data = json_decode(file_get_contents('php://input'), true);
@@ -17,7 +17,7 @@ if ($stmt) {
                 $datas[]=$row;
                 //echo 'nama'. $row['nama']. '<br>';
             }
-            echo json_encode(['STATUS'=>'BERHASIL', 'PESAN'=>'','DATA'=>$datas]);
+            //echo json_encode(['STATUS'=>'BERHASIL', 'PESAN'=>'','DATA'=>$datas]);
         }else{
             // echo 'Data Kosong';
             echo json_encode(['STATUS'=>'GAGAL','PESAN'=>'DATA KOSONG','DATA'=>[]]);

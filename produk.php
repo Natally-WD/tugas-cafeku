@@ -1,13 +1,13 @@
 <?php
 include('./api/koneksi.php');
-include("api/pengguna/selectpengguna.php");
+include("api/produk/selectproduk.php");
 ?>
 <!DOCTYPE html>
 <html lang="id">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Daftar Pengguna | CAFEKU</title>
+    <title>Daftar Produk | CAFEKU</title>
 
     <style>
         * {
@@ -189,8 +189,8 @@ include("api/pengguna/selectpengguna.php");
     <div class = "main-container">
         <div class="content-box">
             <div class="header-section">
-                <h2 class="judultabel">Daftar Pengguna</h2>
-                <a href = "tambahpengguna.php" class="btn-tambah" role="button">Tambah Data Pengguna</a>
+                <h2 class="judultabel">Daftar Produk</h2>
+                <a href = "tambahproduk.php" class="btn-tambah" role="button">Tambah Data Produk</a>
             </div>
         
         <div class="table-wrapper">
@@ -198,10 +198,9 @@ include("api/pengguna/selectpengguna.php");
                 <thead>
                     <tr>
                         <th class="text-center" style="width:60px;">No.</th>
-                        <th>Nama</th>
-                        <th>Username</th>
-                        <th>Alamat</th>
-                        <th>No Hp</th>
+                        <th>Nama Produk</th>
+                        <th>Harga</th>
+                        <th>Stok</th>
                         <th class="text-center" style="width:160px;">Aksi</th>
                     </tr>
                 </thead>
@@ -212,21 +211,20 @@ include("api/pengguna/selectpengguna.php");
                                 <tr>
                                     <td class="text-center"><?php echo $i + 1; ?></td>
                                     <td><?php echo htmlspecialchars($datas[$i]['nama']); ?></td>
-                                    <td><?php echo htmlspecialchars($datas[$i]['username']); ?></td>
-                                    <td><?php echo htmlspecialchars($datas[$i]['alamat']); ?></td>
-                                    <td><?php echo htmlspecialchars($datas[$i]['nohp']); ?></td>
+                                    <td>Rp <?php echo number_format($datas[$i]['harga'], 0, ',', '.'); ?></td>
+                                    <td><?php echo htmlspecialchars($datas[$i]['stok']); ?></td>
                                     <td>
                                         <div class="btn-aksi-container">
-                                            <a href="editpengguna.php?id=<?php echo $datas[$i]['id']; ?>" class="btn-edit" role="button">Edit</a>
-                                            <a href="api/pengguna/deletepengguna.php?id=<?php echo $datas[$i]['id']; ?>" class="btn-hapus" onclick="return confirm('Apakah Anda yakin ingin menghapus data ini?')">Hapus</a>
+                                            <a href="editproduk.php?id=<?php echo $datas[$i]['id']; ?>" class="btn-edit" role="button">Edit</a>
+                                            <a href="api/produk/deleteproduk.php?id=<?php echo $datas[$i]['id']; ?>" class="btn-hapus" onclick="return confirm('Apakah Anda yakin ingin menghapus data ini?')">Hapus</a>
                                         </div>
                                     </td>
                                 </tr>
                             <?php } ?>
                         <?php } else { ?>
                             <tr>
-                                <td colspan="6" class="text-center" style="padding: 20px; color: #777;">
-                                    Belum ada data pengguna.
+                                <td colspan="5" class="text-center" style="padding: 20px; color: #777;">
+                                    Belum ada data produk.
                                 </td>
                             </tr>
                         <?php } ?>
