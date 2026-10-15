@@ -1,0 +1,134 @@
+//Nilai (value) di dalam tag <option> harus sama persis (termasuk huruf besar/kecil) dengan pilihan yang ada di struktur ENUM database. HURUF KECIL DAN BESAR PADA ENUM SANGAT BERPENGARUH
+<div class="mb-3">
+    <label>Role / Level</label>
+    <select name="role" class="form-control" required>
+        <option value="Admin">Admin</option>
+        <option value="Kasir">Kasir</option>
+        <option value="Pelanggan">Pelanggan</option>
+    </select>
+</div>
+
+//query
+$role = $_POST['role'];
+$query = "INSERT INTO users (nama, role) VALUES ('Budi', '$role')";
+mysqli_query($conn, $query);
+
+$allowed_roles = ['Admin', 'Kasir', 'Pelanggan'];
+$role = $_POST['role'];
+
+if (in_array($role, $allowed_roles)) {
+    // Lanjut query INSERT/UPDATE
+} else {
+    echo "Role tidak valid!";
+}
+
+
+//KONEKSI
+<?php
+$host = "localhost";
+$user = "root";
+$pass = "";
+$db   = "nama_database_kamu";
+$port = 3307; // Ubah jadi 3306 jika tidak pakai port khusus
+
+$conn = mysqli_connect($host, $user, $pass, $db, $port);
+if (!$conn) {
+    die("Koneksi gagal: " . mysqli_connect_error());
+}
+?>
+
+
+//ENUM INSERT
+<?php
+include 'koneksi.php';
+
+// Cek apakah tombol submit ditekan
+if (isset($_POST['tambah'])) {
+    $nama_menu = $_POST['nama_menu'];
+    $harga     = $_POST['harga'];
+    $kategori  = $_POST['kategori']; // Jika ada kolom ENUM
+
+    $query = "INSERT INTO menu (nama_menu, harga, kategori) VALUES ('$nama_menu', '$harga', '$kategori')";
+    
+    if (mysqli_query($conn, $query)) {
+        // Redirect kembali ke halaman utama jika berhasil
+        header("Location: index.php?status=sukses_tambah");
+        exit;
+    } else {
+        echo "Gagal tambah data: " . mysqli_error($conn);
+    }
+}
+?>
+
+<!-- Form HTML Tambah Data -->
+<form action="" method="POST">
+    <label>Nama Menu:</label><br>
+    <input type="text" name="nama_menu" required><br><br>
+
+    <label>Harga:</label><br>
+    <input type="number" name="harga" required><br><br>
+
+    <label>Kategori (ENUM):</label><br>
+    <select name="kategori">
+        <option value="Makanan">Makanan</option>
+        <option value="Minuman">Minuman</option>
+    </select><br><br>
+
+    <button type="submit" name="tambah">Simpan Data</button>
+</form>
+
+//EDIT/UPDATE ENUM
+<?php
+include 'koneksi.php';
+
+$id = $_GET['id'];
+$result = mysqli_query($conn, "SELECT * FROM menu WHERE id = '$id'");
+$row = mysqli_fetch_assoc($result);
+
+if (isset($_POST['update'])) {
+    $nama_menu = $_POST['nama_menu'];
+    $harga     = $_POST['harga'];
+
+    $query = "UPDATE menu SET nama_menu = '$nama_menu', harga = '$harga' WHERE id = '$id'";
+
+    if (mysqli_query($conn, $query)) {
+        header("Location: index.php?status=sukses_update");
+        exit;
+    } else {
+        echo "Gagal update: " . mysqli_error($conn);
+    }
+}
+?>
+
+<!-- Form Edit Data -->
+<form action="" method="POST">
+    <label>Nama Menu:</label><br>
+    <input type="text" name="nama_menu" value="<?= $row['nama_menu']; ?>" required><br><br>
+
+    <label>Harga:</label><br>
+    <input type="number" name="harga" value="<?= $row['harga']; ?>" required><br><br>
+
+    <button type="submit" name="update">Perbarui Data</button>
+</form>
+
+
+//DELETE ENUM
+<?php
+include 'koneksi.php';
+
+if (isset($_GET['id'])) {
+    $id = $_GET['id'];
+
+    $query = "DELETE FROM menu WHERE id = '$id'";
+
+    if (mysqli_query($conn, $query)) {
+        header("Location: index.php?status=sukses_hapus");
+        exit;
+    } else {
+        echo "Gagal menghapus data: " . mysqli_error($conn);
+    }
+} else {
+    header("Location: index.php");
+    exit;
+}
+?>
